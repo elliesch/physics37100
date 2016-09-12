@@ -3,14 +3,13 @@
   This project blinks out my birthday in morse code, using sound and light.  
  */
  
- 
 //string to convert to Morse Code
 char blinkingBirthday[] = "june ninth";
 
 // Create variable to define the output pins
 int led = 12;      // blink an led on output 12
 int speaker = 8;      // output audio on pin 8
-int note = 1000;      // sound at 450Hz
+int note = 1000;      // sound at 1000Hz
 
 int dotLen = 100;     // length of the morse code 'dot'
 int dashLen = dotLen * 3;    // length of the morse code 'dash'
@@ -20,21 +19,19 @@ int wordPause = dotLen * 7;  // length of the pause between words
 
 // the setup routine runs once when you press reset:
 void setup() {                
-  // initialize the digital pin as an output for LED lights.
+  // initialize the pin as an output for the LED
   pinMode(led, OUTPUT); 
 }
 
 // Create a loop of the letters/words you want to output in morse code (defined in string at top of code)
 void loop()
 { 
-  // Loop through the string and get each character one at a time until the end is reached
+  // Loop through the string and get each character
   for (int i = 0; i < sizeof(blinkingBirthday) - 1; i++)
   {
-    // Get the character in the current position
+  // identifies current character
   char tmpChar = blinkingBirthday[i];
-  // Set the case to lower case
-  tmpChar = toLowerCase(tmpChar);
-  // Call the subroutine to get the morse code equivalent for this character
+  // Call subroutine below to convert character to morse code
   GetChar(tmpChar);
   }
   // At the end of the string long pause before looping and starting again
@@ -45,7 +42,7 @@ void loop()
 void MorseDot()
 {
   digitalWrite(led, HIGH);    // turn the LED on 
-  tone(speaker, note, dotLen); // start playing a tone
+  tone(speaker, note, dotLen); // start playing speaker
   delay(dotLen);              // hold in this position
 }
 
@@ -53,7 +50,7 @@ void MorseDot()
 void MorseDash()
 {
   digitalWrite(led, HIGH);    // turn the LED on 
-  tone(speaker, note, dashLen);  // start playing a tone
+  tone(speaker, note, dashLen);  // start playing speaker
   delay(dashLen);               // hold in this position
 }
 
@@ -61,11 +58,11 @@ void MorseDash()
 void LightsOff(int delayTime)
 {
   digitalWrite(led, LOW);     // turn the LED off   
-  noTone(speaker);             // stop playing a tone
+  noTone(speaker);             // stop playing speaker
   delay(delayTime);             // hold in this position
 }
 
-// *** Characters to Morse Code Conversion *** //
+//converts characters in string to morse code
 void GetChar(char tmpChar)
 {
   // Take the passed character and use a switch case to find the morse code for that character
@@ -287,7 +284,7 @@ void GetChar(char tmpChar)
     LightsOff(elemPause);
     break;
     default: 
-    // If a matching character was not found it will default to a blank space
+    // If a matching character not found, defaults to a blank space
     LightsOff(Spaces);      
   }
 }
